@@ -5,11 +5,6 @@
       "runtime": "nodejs22.x"
     }
   },
-  "env": {
-    "RESEND_API_KEY": "@resend_api_key",
-    "CONTACT_TO_EMAIL": "@contact_to_email",
-    "CONTACT_FROM_EMAIL": "@contact_from_email"
-  },
   "routes": [
     { "src": "/api/contact", "dest": "/api/contact.js" }
   ]
