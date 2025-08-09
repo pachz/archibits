@@ -1,7 +1,9 @@
 {
   "version": 2,
   "functions": {
-    "api/contact.js": {}
+    "api/contact.js": {
+      "runtime": "nodejs"
+    }
   },
   "routes": [
     { "src": "/api/contact", "dest": "/api/contact.js" }
