@@ -1,0 +1,12 @@
+{
+  "name": "archibits",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Archibits static site with Vercel serverless function for contact form",
+  "license": "MIT",
+  "main": "index.js",
+  "type": "commonjs",
+  "dependencies": {
+    "resend": "^4.0.0"
+  }
+}
