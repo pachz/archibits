@@ -312,31 +312,26 @@ $(document).on('ready', function () {
                     if (data && data.type === 'success') {
                         $form[0].reset();
                     }
+                    if (window.grecaptcha && grecaptcha.reset) {
+                        grecaptcha.reset();
+                    }
                 },
                 error: function (xhr) {
                     var messageText = xhr && xhr.responseText ? xhr.responseText : 'There was an error while submitting the form. Please try again later';
                     var alertBox = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + messageText + '</div>';
                     $form.find('.messages').html(alertBox);
+                    if (window.grecaptcha && grecaptcha.reset) {
+                        grecaptcha.reset();
+                    }
                 }
             });
         }
 
-        // reCAPTCHA v3: generate token just-in-time
-        var siteKey = ($form.find('#submit').data('sitekey')) || '6LdowqIrAAAAAKuXhqjpsHmfiu9rJuwq7rVON2h2';
-        if (typeof grecaptcha === 'undefined' || !grecaptcha.execute) {
-            // If script not loaded, fallback submit without token (server will handle if secret configured)
-            submitAjax();
-            return false;
-        }
+        submitAjax();
 
-        grecaptcha.ready(function () {
-            grecaptcha.execute(siteKey, { action: 'contact' }).then(function (token) {
-                $form.find('input[name="g-recaptcha-response"]').val(token);
-                submitAjax();
-            }).catch(function () {
-                submitAjax();
-            });
-        });
+        // if (window.grecaptcha && grecaptcha.reset) {
+        //     grecaptcha.reset();
+        // }
         return false;
     });
 	
