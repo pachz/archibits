@@ -921,7 +921,7 @@
                 				</div>
                                 <div class="col-sm-offset-3 col-sm-6">
 									<input type="hidden" id="g-token" name="g-recaptcha-response" />
-                    				<input type="submit" class="g-recaptcha" data-sitekey="6LdowqIrAAAAAKuXhqjpsHmfiu9rJuwq7rVON2h2" id="submit" value="Send message" name="submit" />
+                    				<input type="submit" class="g-recaptcha" data-sitekey="6LdowqIrAAAAAKuXhqjpsHmfiu9rJuwq7rVON2h2" data-callback='onSubmit' data-action='submit' id="submit" value="Send message" name="submit" />
                     				<!-- <input type="submit" value="Send message"> -->
                 				</div>
         					</div>
@@ -973,5 +973,13 @@
         <script src="js/custom.js"></script>
         <script src="js/wow.min.js"></script>
         <script>new WOW().init();</script>
+
+		<script>
+			function onSubmit(token) {
+			 //    document.getElementById('g-token').value = token;
+				// Let the existing validator/submit handler in js/custom.js handle submission
+				jQuery('#contact-form').submit();
+			}
+		 </script>
 </body>
 </html>
