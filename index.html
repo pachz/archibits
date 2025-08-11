@@ -887,7 +887,7 @@
             <div class="row"> 
                 <div class="col-md-6">
                     <div class="contact-form">
-                        <form class="form" id="contact-form" method="post" action="/api/contact">
+                        <form class="form" id="contact-form" method="post" action="/api/send-email">
         					<div class="messages"></div>
         					<div class="controls">
 								<div class="col-md-12">
@@ -918,7 +918,12 @@
                         				<div class="help-block with-errors"></div>
                     				</div>
                 				</div>
-								<div class="col-sm-offset-3 col-sm-6">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY"></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-offset-3 col-sm-6">
                     				<input type="submit" value="Send message">
                 				</div>
         					</div>
@@ -966,6 +971,7 @@
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_egfOLjahHB0IWpykRZrVFD8fN4JMgmw"></script>
     	<script src="js/map.js"></script>
         <script src="js/owl.carousel.min.js"></script>
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
         <script src="js/custom.js"></script>
         <script src="js/wow.min.js"></script>
         <script>new WOW().init();</script>

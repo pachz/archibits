@@ -294,7 +294,15 @@ $(document).on('ready', function () {
 
     $('#contact-form').on('submit', function (e) {
         e.preventDefault();
-        var url = "/api/contact";
+        var url = "/api/send-email";
+
+        // reCAPTCHA v2 checkbox: ensure token present
+        var recaptchaResponse = $('#contact-form').find('textarea[name="g-recaptcha-response"]').val();
+        if (typeof grecaptcha !== 'undefined' && (!recaptchaResponse || recaptchaResponse.length === 0)) {
+            var alertBox = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Please complete the reCAPTCHA.</div>';
+            $('#contact-form').find('.messages').html(alertBox);
+            return false;
+        }
 
         $.ajax({
             type: "POST",
@@ -302,16 +310,19 @@ $(document).on('ready', function () {
             data: $(this).serialize(),
             dataType: 'json',
             success: function (data) {
-                var messageAlert = 'alert-' + data.type;
-                var messageText = data.message;
-
+                var messageAlert = 'alert-' + (data && data.type ? data.type : 'success');
+                var messageText = (data && data.message) ? data.message : 'Message Sent Successfully!';
                 var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + messageText + '</div>';
-                if (messageAlert && messageText) {
-                    $('#contact-form').find('.messages').html(alertBox);
-                    if (data.type === 'success') {
-                        $('#contact-form')[0].reset();
-                    }
+                $('#contact-form').find('.messages').html(alertBox);
+                if (data && data.type === 'success') {
+                    $('#contact-form')[0].reset();
+                    if (typeof grecaptcha !== 'undefined') { grecaptcha.reset(); }
                 }
+            },
+            error: function (xhr) {
+                var messageText = xhr && xhr.responseText ? xhr.responseText : 'There was an error while submitting the form. Please try again later';
+                var alertBox = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + messageText + '</div>';
+                $('#contact-form').find('.messages').html(alertBox);
             }
         });
         return false;
