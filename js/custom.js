@@ -298,6 +298,7 @@ $(document).on('ready', function () {
         var url = "/api/send-email";
 
         function submitAjax() {
+            console.log('submitAjax', $form.serialize(), url);
             $.ajax({
                 type: "POST",
                 url: url,
